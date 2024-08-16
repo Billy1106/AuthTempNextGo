@@ -1,16 +1,15 @@
 package main
 
 import (
-	"net/http"
+	"context"
 
-	"github.com/gin-gonic/gin"
+	"github.com/Billy1106/FindSeat/presenter"
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/test", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "ff"})
-	})
-
-	r.Run()
+	ctx := context.Background()
+	server := presenter.NewServer()
+	if err := server.Run(ctx); err != nil {
+		panic(err)
+	}
 }
