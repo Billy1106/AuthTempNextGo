@@ -1,11 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 
-	"github.com/Billy1106/FindSeat/config"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fmt.Println("Hello, World!", config.LoadConfig())
+	r := gin.Default()
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "ff"})
+	})
+
+	r.Run()
 }
