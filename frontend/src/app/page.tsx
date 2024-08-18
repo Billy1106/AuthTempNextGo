@@ -3,21 +3,31 @@ import { Box, Button, Typography, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import useAuth from "@/common/hooks/auth/useAuth";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRequestContext } from "@/common/contexts/RequestContext";
 
 export default function Home() {
   const { data: session, status } = useSession();
+
   const { signIn, signOutUser, loading, error } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { axiosInstance } = useRequestContext();
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await signIn(email, password);
+
   };
 
-  useEffect(() => {
-    console.log(session, status, session?.user);
-  }, [session, status, session?.user]);
+  const handleTestButton = async () => {
+    try{
+      const res = await axiosInstance?.get("/test");
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <main>
@@ -42,13 +52,14 @@ export default function Home() {
           </Typography>
         )}
         {status === "authenticated" ? (
-          <Button
-            variant="contained"
-            onClick={signOutUser}
-            disabled={loading}
-          >
+          <Box>
+            <Button variant="contained" onClick={signOutUser} disabled={loading}>
             {loading ? "Signing out..." : "Sign out"}
           </Button>
+          <Button variant="contained" onClick={handleTestButton} disabled={loading}>
+            Test
+          </Button>
+          </Box>
         ) : (
           <form onSubmit={handleSignIn}>
             <TextField

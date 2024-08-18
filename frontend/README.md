@@ -17,3 +17,6 @@
 
 6. **Fetch User Data with `useSession`**
    - The `useSession` hook can then be used to fetch the authenticated user's data within your application.
+
+Why NextAuth
+Do not need to handle storing id token, Can keep the session with secured cookie on it's own:next-auth.session-token
