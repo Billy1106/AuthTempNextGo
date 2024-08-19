@@ -56,7 +56,7 @@ export default function SignOutPage() {
           {loading ? "Signing out..." : "Sign out"}
         </Button>
         <Button variant="contained" onClick={handleTestButton} disabled={loading}>
-          Test
+          Test send request
         </Button>
       </Box>
     </Box>
