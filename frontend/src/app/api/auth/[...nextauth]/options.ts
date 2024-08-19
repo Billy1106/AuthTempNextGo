@@ -33,6 +33,18 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // If successful sign-in, redirect to the home page or another page of your choice
+      if (url === baseUrl) {
+        return baseUrl;
+      }
+      return "/signout"; 
+    },
+  },
+  pages: {
+    signIn: "/signin",
+    error: "/error",
+    newUser: "/signin",
   },
 };
 

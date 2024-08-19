@@ -1,25 +1,64 @@
-'use client';
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Box, Button } from "@mui/material";
-export default function SignOut() {
-  const { data: session, status } = useSession();
+"use client";
+import { Box, Button, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
+import useAuth from "@/common/hooks/auth/useAuth";
+import { useRequestContext } from "@/common/contexts/RequestContext";
 
-  return (
-    <main>
+export default function SignOutPage() {
+  const { data: session, status } = useSession();
+  const { signOutUser, loading } = useAuth();
+  const { axiosInstance } = useRequestContext();
+
+  const handleTestButton = async () => {
+    try {
+      const res = await axiosInstance?.get("/test");
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  if (status !== "authenticated") {
+    return (
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          flexDirection: "column",
+          textAlign: "center",
         }}
       >
-        <div>
-          ClientComponent {status}{" "}
-          {status === "authenticated" && session.user?.name}
-          <Button onClick={() => signOut()}>Sign out</Button>
-        </div>
+        <Typography variant="h4" gutterBottom>
+          You are not signed in.
+        </Typography>
       </Box>
-    </main>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+        textAlign: "center",
+      }}
+    >
+      <Typography variant="h4" gutterBottom>
+      Welcome, {session?.user.email}!
+      </Typography>
+      <Box>
+        <Button variant="contained" onClick={signOutUser} disabled={loading}>
+          {loading ? "Signing out..." : "Sign out"}
+        </Button>
+        <Button variant="contained" onClick={handleTestButton} disabled={loading}>
+          Test
+        </Button>
+      </Box>
+    </Box>
   );
 }
