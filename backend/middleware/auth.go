@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	"log"
 	"strings"
 
 	firebase "firebase.google.com/go/v4"
@@ -42,15 +41,12 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 		}
 
-		log.Print(token)
-
 		_, err = firebaseClient.VerifyIDToken(c, token)
 		if err != nil {
 			c.JSON(401, gin.H{"error": "Invalid token " + err.Error()})
 			c.Abort()
 		}
 
-		log.Print(token)
 		c.Next()
 	}
 }
