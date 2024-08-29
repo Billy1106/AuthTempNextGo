@@ -17,3 +17,15 @@ services:
       - ./backend:/usr/src/app
     env_file:
       - ./backend/.env
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: mongo_example
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db/mongodb_data:/data/db
+      - ./db/mongo/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
