@@ -21,3 +21,35 @@ func FB_SECRET_CREDENTIAL() string {
 	}
 	return v
 }
+
+func MONGO_HOST() string {
+	v, ok := os.LookupEnv("MONGO_HOST")
+	if !ok {
+		panic("MONGO_HOST is not set")
+	}
+	return v
+}
+
+func MONGO_USER() string {
+	v, ok := os.LookupEnv("MONGO_USER")
+	if !ok {
+		panic("MONGO_USER is not set")
+	}
+	return v
+}
+
+func MONGO_PASSWORD() string {
+	v, ok := os.LookupEnv("MONGO_PASSWORD")
+	if !ok {
+		panic("MONGO_PASSWORD is not set")
+	}
+	return v
+}
+
+func MONGO_DB() string {
+	v, ok := os.LookupEnv("MONGO_DB")
+	if !ok {
+		panic("MONGO_DB is not set")
+	}
+	return v
+}
