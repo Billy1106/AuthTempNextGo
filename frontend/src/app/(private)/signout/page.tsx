@@ -1,12 +1,10 @@
 "use client";
 import { Box, Button, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import useAuth from "@/common/hooks/auth/useAuth";
 import { useRequestContext } from "@/common/contexts/RequestContext";
 
 export default function SignOutPage() {
-  const { data: session, status } = useSession();
-  const { signOutUser, loading } = useAuth();
+  const { signOutUser, loading, session } = useAuth();
   const { client } = useRequestContext();
 
   const handleTestButton = async () => {
@@ -17,25 +15,6 @@ export default function SignOutPage() {
       console.error(error);
     }
   };
-
-  if (status !== "authenticated") {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          flexDirection: "column",
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          You are not signed in.
-        </Typography>
-      </Box>
-    );
-  }
 
   return (
     <Box
