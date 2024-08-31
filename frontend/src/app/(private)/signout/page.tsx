@@ -7,12 +7,12 @@ import { useRequestContext } from "@/common/contexts/RequestContext";
 export default function SignOutPage() {
   const { data: session, status } = useSession();
   const { signOutUser, loading } = useAuth();
-  const { axiosInstance } = useRequestContext();
+  const { client } = useRequestContext();
 
   const handleTestButton = async () => {
     try {
-      const res = await axiosInstance?.get("/test");
-      console.log(res);
+      const res = await client?.GET("/test", {});
+      console.log(res, "res");
     } catch (error) {
       console.error(error);
     }

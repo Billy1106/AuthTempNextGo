@@ -1,47 +1,51 @@
-import { createContext, useEffect, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+  ReactNode,
+} from "react";
 import { auth } from "@/firebase/client";
-import axios, { AxiosInstance } from "axios";
 import { onAuthStateChanged } from "firebase/auth";
+import { getFetchClient } from "@/common/open-api-schema/client";
+import createClient from "openapi-fetch";
+import type { paths } from "@/common/open-api-schema/schema.gen";
+
+type ClientType = ReturnType<typeof createClient<paths>>;
 
 type RequestContextType = {
-    axiosInstance: AxiosInstance | null;
+  client: ClientType | null;
 };
 
 const RequestContext = createContext<RequestContextType>({
-    axiosInstance: null,
+  client: null,
 });
 
 export const RequestProvider = ({ children }: { children: ReactNode }) => {
-    const [axiosInstance, setAxiosInstance] = useState<AxiosInstance | null>(null);
+  const [client, setClient] = useState<any | null>(null);
 
-    useEffect(() => {
-        const initializeAxios = async () => {
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    const idToken = await user.getIdToken();
-                    const instance = axios.create({
-                        baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-                        headers: {
-                            Authorization: `Bearer ${idToken}`,
-                            "Content-Type": "application/json",
-                        },
-                    });
-                    setAxiosInstance(() => instance);
-                } else {
-                    setAxiosInstance(null);
-                }
-            });
-        };
+  useEffect(() => {
+    const initializeClient = async () => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            const client = await getFetchClient({ user });
+            setClient(client);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      });
+    };
 
-        initializeAxios();
-    }, []);
+    initializeClient();
+  }, []);
 
-
-    return (
-        <RequestContext.Provider value={{ axiosInstance }}>
-            {children}
-        </RequestContext.Provider>
-    );
+  return (
+    <RequestContext.Provider value={{ client }}>
+      {children}
+    </RequestContext.Provider>
+  );
 };
 
 export const useRequestContext = () => useContext(RequestContext);
