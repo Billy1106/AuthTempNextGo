@@ -38,7 +38,7 @@ export const authOptions: NextAuthOptions = {
       if (url === baseUrl) {
         return baseUrl;
       }
-      return "/signout"; 
+      return "/signout";
     },
   },
   pages: {

@@ -23,8 +23,7 @@ export default function Home() {
           textAlign: "center",
         }}
       >
-       {
-        isSignedIn ? (
+        {isSignedIn ? (
           <>
             <Typography variant="h4" gutterBottom>
               Welcome, {session?.user.email}!
@@ -42,9 +41,7 @@ export default function Home() {
               Go toSign in
             </Button>
           </>
-        )
-       }
-       
+        )}
       </Box>
     </main>
   );

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky",
+    "eslint": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
@@ -16,6 +19,7 @@
     "axios": "^1.7.4",
     "firebase": "^10.13.0",
     "firebase-admin": "^12.3.1",
+    "husky": "^9.1.5",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
     "openapi-fetch": "^0.11.2",
@@ -28,7 +32,9 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "lint-staged": "^15.2.9",
     "openapi-typescript": "^7.3.0",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.4"
   }
 }

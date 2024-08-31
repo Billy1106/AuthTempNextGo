@@ -17,7 +17,7 @@ export default function SignOutPage() {
       console.error(error);
     }
   };
-  
+
   if (status !== "authenticated") {
     return (
       <Box
@@ -49,13 +49,17 @@ export default function SignOutPage() {
       }}
     >
       <Typography variant="h4" gutterBottom>
-      Welcome, {session?.user.email}!
+        Welcome, {session?.user.email}!
       </Typography>
       <Box>
         <Button variant="contained" onClick={signOutUser} disabled={loading}>
           {loading ? "Signing out..." : "Sign out"}
         </Button>
-        <Button variant="contained" onClick={handleTestButton} disabled={loading}>
+        <Button
+          variant="contained"
+          onClick={handleTestButton}
+          disabled={loading}
+        >
           Test send request
         </Button>
       </Box>
