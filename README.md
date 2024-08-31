@@ -1,6 +1,6 @@
 ## What is this
 
-This is a template for an authenticated frontend/backend service using Firebase. It leverages NextAuth for session management and Firebase for user authentication, providing a robust foundation for building secure applications.
+This is a template for a frontend/backend/DB project that leverages NextAuth for session management and Firebase for user authentication. It uses JWT tokens to communicate with the backend and integrates MongoDB as the database through a repository layer. You can use mongo_test to verify the connection. Additionally, you can utilize Swagger to create a schema for frontend requests by generating the schema with Swagger, providing a robust foundation for building secure applications.
 
 ## How to use
 
@@ -9,6 +9,10 @@ This is a template for an authenticated frontend/backend service using Firebase.
    - For the backend, create a `.env` file in the `backend/` directory and add:
      ```env
      FB_SECRET_CREDENTIAL=
+     MONGO_HOST="mongodb://mongo:27017"
+     MONGO_USER="mongo"
+     MONGO_PASSWORD="mongo"
+     MONGO_DB="mongo_example"
      ```
    - For the frontend, create a `.env.local` file in the `frontend/` directory and add:
      ```env
@@ -40,30 +44,3 @@ This is a template for an authenticated frontend/backend service using Firebase.
      ```bash
      npm install
      ```
-
-## How it works
-
-### Frontend Sign-In Logic
-
-1. **Enter Password and Email**:
-   - The user inputs their email and password into the provided fields.
-
-2. **Attempt Sign-In with `signInWithEmailAndPassword`**:
-   - These credentials are used to authenticate with Firebase. Upon successful authentication, Firebase returns an ID token.
-
-3. **Use ID Token to Sign in via NextAuth**:
-   - The authenticated ID token is then passed to `signInByNextAuth` to establish a session with NextAuth.
-
-4. **NextAuth Verifies the ID Token**:
-   - NextAuth uses its authentication API to verify the ID token provided by Firebase.
-
-5. **User Data Returned to JWT and Session**:
-   - Upon successful verification, NextAuth returns the user data, which is stored in both the JWT (JSON Web Token) and the session.
-
-6. **Fetch User Data with `useSession`**:
-   - The `useSession` hook can then be used to fetch the authenticated user's data within your application.
-
-### Backend Logic
-
-1. **Token Verification**:
-   - When the backend receives a request from the frontend (e.g., for testing purposes), it checks whether the provided token is verified before processing the request.
