@@ -10,8 +10,8 @@ import (
 
 func TestPersonName(t *testing.T) {
 	ctx := gin.Context{}
-	p := mongo.NewProjectRepositoryImpl(ctx)
-	result, err := p.GetAllStaffs(ctx)
+	p := mongo.NewProjectRepositoryImpl(&ctx)
+	result, err := p.GetAllStaffs(&ctx)
 	if err != nil {
 		t.Errorf("Error: %v", err)
 	}

@@ -1,0 +1,23 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  title: AuthTempGo API
+paths:
+  /test:
+    get:
+      description: Verify the health of the server
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      tags:
+      - verify
+swagger: "2.0"
